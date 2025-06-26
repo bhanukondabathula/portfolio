@@ -3,11 +3,25 @@ const themeIcon = document.getElementById("themeIcon");
 
 toggleBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark");
+
   const isDark = document.body.classList.contains("dark");
   themeIcon.src = isDark ? "images/sun.png" : "images/moon.png";
   themeIcon.alt = isDark ? "Switch to Light Mode" : "Switch to Dark Mode";
+  localStorage.setItem("theme", isDark ? "dark" : "light");
 });
-// Contact form handler
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeIcon.src = "images/sun.png";
+    themeIcon.alt = "Switch to Light Mode";
+  } else {
+    themeIcon.src = "images/moon.png";
+    themeIcon.alt = "Switch to Dark Mode";
+  }
+});
+
 function handleSubmit(e) {
   e.preventDefault();
   const form = e.target;
@@ -28,4 +42,3 @@ function handleSubmit(e) {
   form.reset();
   setTimeout(() => (status.textContent = ""), 3000);
 }
-
